@@ -8,6 +8,8 @@
 
 #ifdef OPT
 #define OUT_FILE "opt.txt"
+#elif defined(HASH)
+#define OUT_FILE "hash.txt"
 #else
 #define OUT_FILE "orig.txt"
 #endif
@@ -48,6 +50,13 @@ int main(int argc, char *argv[])
     printf("size of entry : %lu bytes\n", sizeof(entry));
     e = pHead;
     e->pNext = NULL;
+
+#if defined(HASH)
+    // initialization of hashtable
+    unsigned int __i;
+    for (__i = 0; __i < MAX_HASHTABLE_SIZE; ++__i)
+        hashTable[__i] = NULL;
+#endif
 
 #if defined(__GNUC__)
     __builtin___clear_cache((char *) pHead, (char *) pHead + sizeof(entry));
